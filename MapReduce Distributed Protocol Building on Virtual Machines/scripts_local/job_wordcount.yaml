@@ -1,0 +1,6 @@
+input_dir: /your/input/directory
+output_dir: /your/output/directory
+shuffle: hash
+token_min_len: 2
+lowercase: true
+port: 5001

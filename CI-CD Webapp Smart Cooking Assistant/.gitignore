@@ -1,0 +1,55 @@
+__pycache__/
+**/__pycache__/
+*.pyc
+.env
+.DS_Store
+.vscode/
+*.log
+*.logs
+logs/
+.venv/
+.ipynb_checkpoints/
+.streamlit/
+
+# Model & data artifacts
+*.pkl
+*.npz
+
+# Ignore large dataset CSV exports (raw/interim/processed) and analysis result dumps
+data/raw/*.csv
+data/interim/*.csv
+data/processed/*.csv
+analysis_parameter_justification/results_to_analyse/*.csv
+
+# Whitelist essential demo artifacts for hosted Streamlit (small size)
+!data/interim/recipes_classified_enriched.csv
+!data/interim/recipes_classified.csv
+!data/processed/top20_plat_for_each_season.csv
+!data/processed/top20_dessert_for_each_season.csv
+!data/processed/top20_boisson_for_each_season.csv
+# Only keep canonical latest review distribution & top_100 alias; ignore timestamped smaller sets
+# Explicitly ignore smaller obsolete review subsets even if directory whitelists others
+analysis_parameter_justification/results_to_analyse/top_3_reviews_by_type_season_*.csv
+analysis_parameter_justification/results_to_analyse/top_5_reviews_by_type_season_*.csv
+analysis_parameter_justification/results_to_analyse/top_10_reviews_by_type_season_*.csv
+!analysis_parameter_justification/results_to_analyse/season_type_distribution_latest.csv
+!analysis_parameter_justification/results_to_analyse/top_100_reviews_by_type_season_latest.csv
+
+
+# Allow keeping small illustrative samples (place in data/samples/)
+!data/samples/*.csv
+
+# Ignore timestamped result dumps anywhere (e.g., RAW_interactions_20251031-160745.csv)
+*/*_20????????_*.csv
+
+# Ignore generated HTML docs build output
+docs/_build/
+
+# Logs
+*.log.*
+
+# Prevent committing coverage reports
+.coverage*
+
+# Poetry lock backup (if any) should not be committed
+poetry.lock.bak

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: ginflix-backend, namespace: ginflix }
+spec:
+  replicas: 3
+  selector: { matchLabels: { app: ginflix-backend } }
+  template:
+    metadata: { labels: { app: ginflix-backend } }
+    spec:
+      containers:
+        - name: app
+          image: ginflix-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ name: http, containerPort: 8080 }]
+          envFrom:
+            - configMapRef: { name: ginflix-config }
+            - secretRef:    { name: ginflix-secrets }
+          # probe simple (évite les faux négatifs)
+          readinessProbe:
+            httpGet: { path: "/", port: http }
+            initialDelaySeconds: 3
+            periodSeconds: 5     

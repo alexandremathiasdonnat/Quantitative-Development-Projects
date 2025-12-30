@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: ginflix-frontend-admin, namespace: ginflix }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: ginflix-frontend-admin } }
+  template:
+    metadata: { labels: { app: ginflix-frontend-admin } }
+    spec:
+      containers:
+        - name: app
+          image: ginflix-frontend-admin:latest
+          imagePullPolicy: IfNotPresent
+          ports: [{ name: http, containerPort: 80 }]
+          envFrom:
+            - configMapRef: { name: ginflix-config }

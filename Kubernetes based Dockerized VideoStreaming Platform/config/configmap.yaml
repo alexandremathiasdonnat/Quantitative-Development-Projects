@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ginflix-config
+  namespace: ginflix
+data:
+  AUTH_DISABLED: "true"
+  BACKEND_URL: "http://localhost:30081"
+  STREAM_URL:  "http://localhost:30082"
+  MONGO_URI:   "###"

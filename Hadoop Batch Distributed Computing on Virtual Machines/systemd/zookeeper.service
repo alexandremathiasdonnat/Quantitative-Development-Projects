@@ -1,0 +1,13 @@
+[Unit]
+Description=ZooKeeper
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStart=/opt/zookeeper/bin/zkServer.sh start-foreground
+ExecStop=/opt/zookeeper/bin/zkServer.sh stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+<configuration>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>tp-hadoop-22</value> <!-- adresse ResourceManager -->
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value> <!-- service shuffle Node Manager (by default, mais explicité) -->
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>3584</value> <!-- RAM max pour Node Manager (free -m) / Garder 500Mo (question de laisser) -->
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>4</value> <!-- nb CPU dispo pour Node Manager (nproc) -->
+    </property>
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value> <!-- Avoir les logs = preuve de job en // -->
+    </property>    
+</configuration>

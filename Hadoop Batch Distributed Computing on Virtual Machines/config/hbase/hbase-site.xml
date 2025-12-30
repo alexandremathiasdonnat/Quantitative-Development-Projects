@@ -1,0 +1,26 @@
+<configuration>
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://tp-hadoop-22:9000/hbase</value>
+  </property>
+
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>tp-hadoop-22,tp-hadoop-9,tp-hadoop-30,tp-hadoop-31</value>
+  </property>
+
+  <property>
+    <name>hbase.zookeeper.property.clientPort</name>
+    <value>2181</value>
+  </property>
+
+  <property>
+    <name>hbase.wal.provider</name>
+    <value>filesystem</value>
+  </property>
+</configuration>

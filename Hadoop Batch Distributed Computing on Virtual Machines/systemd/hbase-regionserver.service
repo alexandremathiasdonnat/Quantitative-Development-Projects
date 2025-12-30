@@ -1,0 +1,12 @@
+[Unit]
+Description=HBase RegionServer
+After=network.target zookeeper.service
+
+[Service]
+User=ubuntu
+ExecStart=/opt/hbase/bin/hbase regionserver start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

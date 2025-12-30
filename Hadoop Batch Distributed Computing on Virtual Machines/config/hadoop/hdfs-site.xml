@@ -1,0 +1,22 @@
+<configuration>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/opt/hadoop/data/namenode</value> <!-- dossier métadata NameNode -->
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/opt/hadoop/data/datanode</value> <!-- dossier blocs DataNode -->
+    </property>
+    <property>
+        <name>dfs.replication</name>  <!-- nbr copies des blocs -->
+        <value>3</value>    <!-- Sweespot entre perf & proba de panne, 4 est overkill, 2 pas suffisant. -->
+    </property>
+    <property>
+      <name>dfs.blocksize</name>
+      <value>134217728</value>   <!-- 128 Mo -->
+    </property>
+    <property>
+      <name>dfs.namenode.secondary.http-address</name>
+    <value>tp-hadoop-9:9868</value>
+</property>
+</configuration>

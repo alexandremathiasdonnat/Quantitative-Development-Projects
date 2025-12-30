@@ -1,0 +1,10 @@
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://tp-hadoop-22:9000</value> <!-- FS par défaut, adresse du NameNode -->
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/opt/hadoop/data</value> <!-- dossier tmp Hadoop -->
+    </property>
+</configuration>

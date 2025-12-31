@@ -1,5 +1,7 @@
 # Quantitative Development Projects
 
+**Hi there! 👋**
+
 This repository is a collection of end-to-end engineering projects exploring how data, algorithms, and infrastructure interact in real systems.
 
 Rather than focusing on a single domain or stack, these projects deliberately span multiple layers of modern software engineering: data pipelines, backend services, distributed computation, containerization, orchestration, testing, and deployment.

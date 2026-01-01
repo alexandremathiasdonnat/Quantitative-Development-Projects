@@ -58,4 +58,4 @@ All projects requiring multiple nodes are executed on a Linux-based virtual mach
 
 ---
 
-**Alexandre Mathias Donnat**
+***Alexandre Mathias Donnat***

@@ -1,0 +1,84 @@
+# =========================
+# .NET / Visual Studio
+# =========================
+
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache
+.vs/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# =========================
+# Build artifacts
+# =========================
+
+Debug/
+Release/
+x64/
+x86/
+AnyCPU/
+
+# =========================
+# Test results
+# =========================
+
+TestResults/
+*.trx
+
+# =========================
+# NuGet
+# =========================
+
+*.nupkg
+packages/
+.nuget/
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# =========================
+# Logs & temp
+# =========================
+
+*.log
+*.tmp
+*.bak
+*.swp
+
+# =========================
+# ANTLR
+# =========================
+
+# Generated parser/lexer (keep grammar, ignore outputs)
+QuantDsl.Core/Generated/
+
+# =========================
+# CLI samples outputs (if any later)
+# =========================
+
+*.out
+
+# =========================
+# Coverage
+# =========================
+
+coverage/
+coverage.*

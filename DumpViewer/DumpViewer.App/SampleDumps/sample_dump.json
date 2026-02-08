@@ -1,0 +1,10 @@
+{
+  "ProductId": "Swap1",
+  "RunTime": "2026-02-08T18:00:00",
+  "Price": 102.34,
+  "Greeks": {
+    "Delta": 0.12,
+    "Vega": 1.85,
+    "Gamma": 0.03
+  }
+}

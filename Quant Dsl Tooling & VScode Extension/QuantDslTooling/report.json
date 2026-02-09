@@ -1,0 +1,10 @@
+{
+  "Path": "QuantDsl.Cli/Samples/sample.dsl",
+  "SyntaxErrors": [],
+  "SemanticDiagnostics": [],
+  "Summary": {
+    "ok": true,
+    "syntaxErrorCount": 0,
+    "semanticErrorCount": 0
+  }
+}

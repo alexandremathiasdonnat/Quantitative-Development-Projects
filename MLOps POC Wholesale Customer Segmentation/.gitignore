@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+*.pdf
+# Virtual env
+.venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (binaires lourds)
+data/raw/*
+data/processed/*
+models/*.pkl
+models/*.joblib
+
+# Docker
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Airflow
+airflow_dev/logs/
+airflow_dev/airflow.db
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# MLflow local runs & artifacts
+mlruns/
+scaler.joblib
+*.joblib

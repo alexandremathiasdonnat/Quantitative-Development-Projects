@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  namespace: wholesale-mlops
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: wholesale-clustering-webapp:latest
+          imagePullPolicy: Never          # image locale (Minikube / Docker Desktop)
+          ports:
+            - containerPort: 7860
+          env:
+            - name: API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mlops-secrets
+                  key: API_URL
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"

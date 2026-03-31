@@ -1,0 +1,140 @@
+services:
+
+  # ──────────────────────────────────────────────
+  # MinIO (S3-compatible object storage)
+  # ──────────────────────────────────────────────
+  minio:
+    image: minio/minio:latest
+    container_name: mlflow-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: mlflow-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        until /usr/bin/mc alias set minio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}; do
+          echo '...waiting...' && sleep 1
+        done
+        /usr/bin/mc mb minio/${MINIO_BUCKET} || true
+        /usr/bin/mc anonymous set public minio/${MINIO_BUCKET} || true
+        echo 'Bucket created successfully'
+
+  # ──────────────────────────────────────────────
+  # Airflow (orchestration / DAGs)
+  # ──────────────────────────────────────────────
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow
+    ports:
+      - "8081:8080"
+    environment:
+      AIRFLOW_HOME: /opt/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      PYTHONPATH: /opt/airflow
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
+      MLFLOW_S3_ENDPOINT_URL: ${MLFLOW_S3_ENDPOINT_URL}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - ./airflow_dev/dags:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+    command: airflow standalone
+    depends_on:
+      minio:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────
+  # FastAPI (prediction API)
+  # ──────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: api
+    ports:
+      - "8000:8000"
+    environment:
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
+      MLFLOW_S3_ENDPOINT_URL: ${MLFLOW_S3_ENDPOINT_URL}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    depends_on:
+      minio:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────
+  # Gradio (WebApp)
+  # ──────────────────────────────────────────────
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+    container_name: webapp
+    ports:
+      - "7860:7860"
+    environment:
+      API_URL: ${API_URL}
+    depends_on:
+      - api
+
+  # ──────────────────────────────────────────────
+  # Prometheus (collecte de métriques)
+  # ──────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=7d"
+    depends_on:
+      - api
+
+  # ──────────────────────────────────────────────
+  # Grafana (visualisation des métriques)
+  # ──────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+
+volumes:
+  minio_data:
+  jupyter_data:
+  prometheus_data:
+  grafana_data:

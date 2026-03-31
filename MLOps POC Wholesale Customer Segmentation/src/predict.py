@@ -1,0 +1,59 @@
+"""Chargement du modèle et prédiction de cluster."""
+
+import joblib
+import mlflow
+import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()
+
+from src.data import prepare_features  # noqa: E402
+from src.train import MLFLOW_EXPERIMENT  # noqa: E402
+
+
+def load_model(run_id: str | None = None, experiment_name: str = MLFLOW_EXPERIMENT):
+    """Charge le modèle K-Means et le scaler depuis MLflow.
+
+    Ordre de priorité :
+      1. run_id explicite
+      2. Model Registry (wholesale_kmeans_best)
+      3. Dernier run de l'expérience
+    """
+    if run_id is None:
+        # Tentative via le Model Registry (meilleur modèle sélectionné par le DAG)
+        try:
+            model = mlflow.sklearn.load_model("models:/wholesale_kmeans_best/latest")
+            client = mlflow.MlflowClient()
+            versions = client.get_latest_versions("wholesale_kmeans_best")
+            run_id = versions[0].run_id
+            scaler_path = mlflow.artifacts.download_artifacts(f"runs:/{run_id}/scaler.joblib")
+            scaler = joblib.load(scaler_path)
+            return model, scaler, run_id
+        except Exception:
+            pass
+
+        # Fallback : dernier run de l'expérience
+        experiment = mlflow.get_experiment_by_name(experiment_name)
+        if experiment is None:
+            raise ValueError(f"Expérience '{experiment_name}' introuvable. Lancez d'abord train.py.")
+        runs = mlflow.search_runs(
+            experiment_ids=[experiment.experiment_id],
+            order_by=["start_time DESC"],
+            max_results=1,
+        )
+        if runs.empty:
+            raise ValueError("Aucun run trouvé dans l'expérience.")
+        run_id = runs.iloc[0].run_id
+
+    model = mlflow.sklearn.load_model(f"runs:/{run_id}/kmeans_model")
+    scaler_path = mlflow.artifacts.download_artifacts(f"runs:/{run_id}/scaler.joblib")
+    scaler = joblib.load(scaler_path)
+    return model, scaler, run_id
+
+
+def predict(model, scaler, features: dict[str, float]) -> int:
+    """Prédit le cluster d'un client à partir de ses dépenses."""
+    df = pd.DataFrame([features])
+    df_features = prepare_features(df)
+    df_scaled = pd.DataFrame(scaler.transform(df_features), columns=df_features.columns)
+    return int(model.predict(df_scaled)[0])

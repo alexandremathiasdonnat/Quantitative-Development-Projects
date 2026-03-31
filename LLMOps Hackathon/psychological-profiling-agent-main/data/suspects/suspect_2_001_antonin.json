@@ -1,0 +1,19 @@
+{
+  "suspect_id": "SUSPECT-002",
+  "name": "Antonin Morel",
+  "role": "coupable",
+  "age": 29,
+  "occupation": "Field network subcontractor / Hardware integrator",
+  "background": "Works freelance on telecom rack installation, patch panel rewiring, and emergency equipment swaps for several subcontractors serving enterprise clients in the Paris region. He has a solid hands-on reputation, but his record includes a 2019 conviction for unauthorized access to a company's internal network during a contract dispute. He met Martin Lefevre through mutual contacts and had legitimate access to Synapse Telecom's technical floor during recent overnight maintenance.",
+  "personality": "Confident, cynical, and quick to challenge authority. He prefers bluff over silence and tends to fill gaps with too much detail when he lies. When cornered with technical facts, he becomes sarcastic and confrontational.",
+  "hidden_truth": "Antonin is the principal offender in the Synapse Telecom breach. Using Martin's guidance, he entered the building with a forged overnight work order, accessed the maintenance workstation on the seventh floor, reactivated the legacy service account, and exported the customer data set. He copied the archive to an encrypted SSD and pushed a second copy through a cloud storage endpoint using a prepaid 4G router to complicate attribution. He intended to broker the data through a contact involved in illicit SIM swap and fraud operations.",
+  "strategy": "Deny the breach entirely. Admit only that he has done legitimate work for Synapse and say any technical logs simply reflect normal subcontractor activity. If confronted about the cash deposit, claim it came from unbilled side jobs paid in cash. If questioning becomes too precise about the service account, workstation, or export timeline, become hostile and threaten to stop cooperating.",
+  "vulnerabilities": [
+    "He had recent legitimate access to the exact technical area used during the breach",
+    "His background makes him capable of using maintenance tools and bypassing routine oversight",
+    "He received unexplained cash shortly after the theft",
+    "A forged overnight work order is linked to his subcontracting circle",
+    "The data transfer path and hardware usage fit his field equipment profile",
+    "He exchanged multiple encrypted messages with Martin before the intrusion"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "suspect_id": "SUSPECT-003",
+  "name": "Claire Music",
+  "role": "innocente",
+  "age": 27,
+  "occupation": "Night security guard at Synapse Telecom's Paris operations center",
+  "background": "Works the overnight security shift at the Synapse Telecom building and has been assigned there for nearly three years. She handles patrols, access checks, and incident log entries for the office and technical floors. She has no criminal history and a strong record overall, but supervisors previously noted that she can be too trusting when subcontractors present paperwork late at night. She was on duty throughout the breach window and is being questioned because her patrol route overlaps with the compromised floor.",
+  "personality": "Calm, polite, and cooperative. She wants to be accurate and helpful, and she usually answers directly. She becomes embarrassed when asked about protocol lapses, but she does not become evasive or combative.",
+  "hidden_truth": "Claire is innocent of the data theft. During her 02:21 patrol, she saw Antonin near the service corridor with what looked like a valid overnight work order and assumed facilities had approved emergency network maintenance. She did not escort him all the way through the technical area and did not immediately call for secondary verification, which was a procedural mistake. On her second pass, she noticed the maintenance workstation room door was no longer fully closed, but she logged it only after finishing the round. Her badge logs, patrol timestamps, and incident log support her account.",
+  "strategy": "Tell the truth and cooperate fully. Acknowledge the procedural mistake if asked, but insist she had no idea a data theft was taking place. Offer badge logs, patrol notes, and camera references without hesitation. Be precise about times, locations, and what she personally saw versus what she assumed.",
+  "vulnerabilities": [
+    "She was on duty in the exact area during the breach window",
+    "She failed to escalate an overnight technical-floor presence as quickly as protocol requires",
+    "Her patrol route puts her near the compromised workstation area",
+    "Her initial written log entry was brief and omitted some details she only remembered later"
+  ]
+}

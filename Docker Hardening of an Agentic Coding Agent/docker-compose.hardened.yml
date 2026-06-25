@@ -1,0 +1,22 @@
+services:
+  agent-hardened:
+    build: .
+    container_name: zeroclaw-agent-hardened
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    network_mode: "none"
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 1.0
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+      - /run:rw,noexec,nosuid,size=64m
+    volumes:
+      - ./config:/agent-config:ro
+      - ./workspace:/workspace:rw
+      - ./results:/results:rw
+    command: ["python3", "/opt/agent/attack_driver.py"]

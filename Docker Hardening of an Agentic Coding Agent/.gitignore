@@ -1,0 +1,33 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Local environment files and real secrets
+.env
+.env.*
+!.env.example
+secrets/*
+!secrets/fake_api_key.txt
+
+# Files produced by attack-driver runs
+results/*.log
+results/*.json
+workspace/*
+!workspace/README.md
+config/.mcp.json
+
+# Docker / Compose local overrides
+docker-compose.override.yml

@@ -1,0 +1,10 @@
+{
+  "agent": "ZeroClaw",
+  "mode": "project",
+  "hooks": [],
+  "permissions": {
+    "shell": true,
+    "http": false,
+    "mcp": false
+  }
+}

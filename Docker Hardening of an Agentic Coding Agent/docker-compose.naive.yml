@@ -1,0 +1,11 @@
+services:
+  agent-naive:
+    build: .
+    container_name: zeroclaw-agent-naive
+    user: "0:0"
+    volumes:
+      - ./config:/agent-config:rw
+      - ./workspace:/workspace:rw
+      - ./secrets:/secrets:rw
+      - ./results:/results:rw
+    command: ["python3", "/opt/agent/attack_driver.py"]
